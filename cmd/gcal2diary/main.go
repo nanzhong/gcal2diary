@@ -23,15 +23,20 @@ var (
 )
 
 func init() {
-	var tokenPath string
+	var (
+		credentialsPath string
+		tokenPath       string
+	)
 	configDir, _ := os.UserConfigDir()
 	if configDir != "" {
+		credentialsPath = configDir + "/gcal2diary/credentials.json"
 		tokenPath = configDir + "/gcal2diary/token.json"
 	} else {
+		credentialsPath = configDir + "./credentials.json"
 		tokenPath = "./token.json"
 	}
 
-	flag.StringVar(&flagCredentials, "credentials", "./credentials.json", "Path to the credentials file.")
+	flag.StringVar(&flagCredentials, "credentials", credentialsPath, "Path to the credentials file.")
 	flag.StringVar(&flagToken, "token", tokenPath, "Path to the oauth token to use.")
 	flag.BoolVar(&flagDebug, "debug", false, "Print debug information to stderr.")
 	flag.StringVar(&flagDateStyle, "date-style", "iso", "Date style to use (iso, us, eu).")
